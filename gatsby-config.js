@@ -25,5 +25,6 @@ module.exports = {
 				configPath: require.resolve(`./i18n/config.json`),
 			},
 		},
+		`gatsby-plugin-netlify`,
 	],
 };
