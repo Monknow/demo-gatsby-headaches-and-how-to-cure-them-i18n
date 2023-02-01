@@ -1,6 +1,7 @@
 import * as React from "react";
 import {GatsbyImage, getImage} from "gatsby-plugin-image";
 import {graphql} from "gatsby";
+import {FormattedMessage} from "react-intl";
 
 const RecipePage = ({data}) => {
 	const {html, frontmatter} = data.markdownRemark;
@@ -10,7 +11,7 @@ const RecipePage = ({data}) => {
 	return (
 		<main>
 			<h1>{title}</h1>
-			<p>{date}</p>
+			<FormattedMessage id="recipe_post_date" values={{postedOn: new Date(date)}} />
 			<GatsbyImage image={cover_image_data} alt={cover_image.alt} />
 			<p dangerouslySetInnerHTML={{__html: html}}></p>
 		</main>
@@ -18,8 +19,8 @@ const RecipePage = ({data}) => {
 };
 
 export const recipeQuery = graphql`
-	query RecipeQuery($frontmatter__slug: String) {
-		markdownRemark(frontmatter: {slug: {eq: $frontmatter__slug}}) {
+	query RecipeQuery($frontmatter__slug: String, $locale: String) {
+		markdownRemark(frontmatter: {slug: {eq: $frontmatter__slug}, locale: {eq: $locale}}) {
 			frontmatter {
 				slug
 				title
